@@ -20,9 +20,9 @@ app.use("/admin", admin_routes);
 app.use("/",user_routes);
 
 
-// app.use((req, res, next) => {
-//     res.status(404).send('404: Page Not Found');
-//   });
+app.use((req, res, next) => {
+    res.status(404).send('404: Page Not Found');
+  });
   
 
 app.listen(1000);
