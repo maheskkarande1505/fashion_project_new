@@ -1,0 +1,28 @@
+
+<%-include("navbar.ejs")%>
+
+
+<div class="container card card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Edit Category</h1>
+            <form action="/admin/update_category" method="post">
+                <input type="hidden" name="category_id" value="<%-categories.category_id%>">
+                <div class="col-md-12 mb-3">
+                    <label class="label">Category Name</label>
+                    <input type="text" name="category_name" class="form-control" value="<%-categories.category_name%>">
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="label"> Category Details</label>
+                    <textarea name="category_details" class="form-control"><%-categories.category_details%></textarea>
+                </div>
+                <div class="col-md-12 mb-3 text-center">
+                    <button class="btn btn-primary">Update Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include("footer.ejs")%>
+

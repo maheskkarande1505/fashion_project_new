@@ -1,0 +1,71 @@
+<%-include("navbar.ejs")%>
+
+
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+
+    xaxis = [<%-"'"+xaxis.join("','")+"'"%>]
+    yaxis = [<%-yaxis.join(",")%>]
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: xaxis,
+        datasets: [{
+          label: 'Sales In RS',
+          data: yaxis,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card p-3">
+                <div>Pending Orders</div>
+                <div><h3><%-pending_orders.ttl%> Order</h3></div>
+                <div>Pending Order Bills</div>
+                <div><h3><%-pending_order_paid_amount.ttl%>  Paid Amount</h3></div>
+                <div >Pending Order Bills</div>
+                <div ><h3><%-pending_order_unpaid_amount.ttl%> Pending Amount</h3></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card p-3">
+                <div>Dispatch Orders</div>
+                <div><h3><%-dispatch_orders.ttl%> Order</h3></div>
+                <div>Dispatch Order Bills</div>
+                <div><h3><%-dispatch_order_paid_amount.ttl%>  Paid Amount</h3></div>
+                <div >Dispatch Order Bills</div>
+                <div ><h3><%-dispatch_order_unpaid_amount.ttl%> Pending Amount</h3></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card p-3">
+                <div>Deliver Orders</div>
+                <div><h3><%-deliver_orders.ttl%> Order</h3></div>
+                <div>Deliver Order Bills</div>
+                <div><h3><%-deliver_order_paid_amount.ttl%>  Paid Amount</h3></div>
+                <div >Deliver Order Bills</div>
+                <div ><h3><%-deliver_order_unpaid_amount.ttl%> Pending Amount</h3></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-include("footer.ejs")%>

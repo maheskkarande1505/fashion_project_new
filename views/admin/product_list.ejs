@@ -1,0 +1,60 @@
+
+<%-include("navbar.ejs")%>
+
+
+<div class="container card card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Product List</h1>
+            <div class="col-md-12 table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Action</th>
+                        <th>Sr.No</th>
+                        <th>Product&nbsp;Name</th>
+                        <th>Product Price</th>
+                        <th>Product Category</th>
+                        <th>Product Brand</th>
+                        <th>Product Type</th>
+                        <th>Product Image</th>
+                        <th>Product Size</th>
+
+                    </tr> 
+                    <% products.map((row, i)=>{ %>
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <a href="/admin/edit_product/<%-row.product_id%>">
+                                   <button class="btn btn-sm btn-primary"> <i class="fi fi-sc-pencil"></i></button>
+                                </a>
+                                <a href="/admin/delete_product/<%-row.product_id%>" onclick="return confirm('Are you Sure...?')">
+                                    <button class="btn btn-sm btn-danger"> <i class="fi fi-ss-trash"></i></button>
+                                 </a>
+                            </td>
+                            <td><%-i+1%></td>
+                            <td><%-row.product_name%></td>
+                            <td><%-row.product_price%></td>
+                            <td><%-row.category_name%></td>
+                            <td><%-row.brand_name%></td>
+                            <td><%-row.product_type%></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="open_image('<%-row.product_image1%>')">Open</button>
+                            </td>
+                            <td><%-row.product_size%></td>  
+
+                        </tr>
+                    <% }) %>
+                </table>
+            </div>
+        </div>  
+    </div>
+</div>
+
+<script>
+      function open_image(img_path)
+      {
+        window.open('/uploads/'+img_path, "", "width=500px, height=500");  
+      }  
+</script>
+
+<%-include("footer.ejs")%>
+

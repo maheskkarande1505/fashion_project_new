@@ -1,0 +1,42 @@
+
+<%-include("navbar.ejs")%>
+
+
+<div class="container card card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Category List</h1>
+            <div class="col-md-12">
+                <table class="table table-striped" width="100%">
+                    <tr>
+                        <th>Action</th>
+                        <th>Sr.No</th>
+                        <th>Category&nbsp;Name</th>
+                        <th>Category Details</th>
+                    </tr>
+
+                    <% categories.map((row, i)=> { %>
+
+                        <tr>
+                            <td style="white-space: nowrap;">
+                                <a href="/admin/edit_category/<%-row.category_id%>">
+                                   <button class="btn btn-sm btn-primary"> <i class="fi fi-sc-pencil"></i></button>
+                                </a>
+                                <a href="/admin/delete_category/<%-row.category_id%>" onclick="return confirm('Are you Sure...?')">
+                                    <button class="btn btn-sm btn-danger"> <i class="fi fi-ss-trash"></i></button>
+                                 </a>
+                            </td>
+                            <td><%-i+1%></td>
+                            <td><%-row.category_name%></td>
+                            <td><%-row.category_details%></td>
+                        </tr>
+
+                    <% }) %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-include("footer.ejs")%>
+

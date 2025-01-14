@@ -1,0 +1,34 @@
+
+<%-include("navbar.ejs")%>
+
+<div class="container card card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Edit Brand</h1>
+        </div>
+        <form action="/admin/update_brand" method="post" enctype="multipart/form-data">
+           <div class="row">
+                <input type="hidden" name="brand_id" value="<%-brands.brand_id%>">
+                <div class="col-md-6 mb-3">
+                    <label class="label">Brand Name</label>
+                    <input type="text" name="brand_name" class="form-control" value="<%-brands.brand_name%>">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="label">Brand Image</label>
+                    <input type="file" name="brand_image" class="form-control">
+                    <img src="/uploads/<%-brands.brand_image%>" alt="<%- brands.brand_name %>" height="50px" width="100px">
+                </div>
+                <div class="col-md-12 mb-3 ">
+                    <label class="label">Brand Details</label>
+                    <textarea name="brand_details" rows="4" class="form-control"><%-brands.brand_details%></textarea>
+                </div>
+                <div class="col-md-12 mb-3 text-center">
+                    <button class="btn btn-primary">Update Brand</button>
+                </div>
+           </div>
+        </form>
+    </div>
+</div>
+
+<%-include("footer.ejs")%>
+
