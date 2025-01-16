@@ -2,8 +2,17 @@ var express = require("express");
 var router = express.Router();
 var exe = require("./../connection")
 
-router.get("/", async function(req, res){
+function verify_login(req, res, next)
+{
+    req.session.user_id = 1;
+    if(req.session.user_id)
+        next();
+    else
+    res.send("<script> location.href = document.referrer+'?open_login_modal' </script> ");
+}
 
+router.get("/", async function(req, res){
+    
     
     // Pending Order Count
     var sql1 =` SELECT COUNT(*) as ttl FROM order_info WHERE order_status = 'Pending' `;

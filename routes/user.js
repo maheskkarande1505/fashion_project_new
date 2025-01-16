@@ -5,7 +5,7 @@ var url = require("url")
 
 function verify_login(req, res, next)
 {
-    req.session.user_id = 1;
+   // req.session.user_id = 1;
     if(req.session.user_id)
         next();
     else
@@ -20,14 +20,15 @@ function is_login(req)
         return false;
 }
 
-router.get("/", verify_login, async function(req, res){
+router.get("/",  async function(req, res){
     var category = await exe('SELECT * FROM category',);
-    var obj = {"category":category, "is_login":is_login(req)};
+    var products = await exe(`SELECT * FROM products`)
+    var obj = {"category":category, "products":products, "is_login":is_login(req)};
     res.render("user/home.ejs", obj);
 });
 
 
-router.get("/products",async function(req, res){
+router.get("/products", async function(req, res){
     var category = await exe('SELECT * FROM category');
     var url_data = url.parse(req.url,true).query;
     var cond = '';
@@ -47,7 +48,7 @@ router.get("/products",async function(req, res){
     res.render("user/products.ejs", obj)
 })
 
-router.get("/product_details/:product_id", async function(req,res){
+router.get("/product_details/:product_id",async function(req,res){
     var category = await exe('SELECT * FROM category');
     var product_info = await exe( `SELECT * FROM products, category, brands
                                    WHERE
@@ -125,7 +126,7 @@ router.get("/delete_from_cart/:cart_id", verify_login, async function(req, res){
 
 });
 
-router.post("/update_cart_qty", async function(req, res){
+router.post("/update_cart_qty", verify_login, async function(req, res){
     var d = req.body;
     var sql =`UPDATE cart SET quantity = '${d.new_qty}' WHERE cart_id = '${d.cart_id}' `;
     var data = await exe(sql);
@@ -211,7 +212,7 @@ router.post("/confirm_order", verify_login,async function(req, res){
 
 })
 
-router.get("/do_payment/:order_id", async function(req, res){
+router.get("/do_payment/:order_id", verify_login, async function(req, res){
     var order_id = req.params.order_id;
     var sql = `SELECT * FROM order_info WHERE order_id = '${order_id}'`;
     var order_info = await exe(sql);
@@ -253,13 +254,13 @@ router.get("/my_orders", verify_login, async function(req, res){
 
 
 
-router.get("/contact_us", verify_login, async function (req, res){
+router.get("/contact_us", async function (req, res){
     var category = await exe('SELECT * FROM category',);
     var obj = {"category":category, "is_login":is_login(req)};
     res.render("user/contact.ejs", obj);
 });
 
-router.post("/save_contact_us",verify_login, async function (req, res){
+router.post("/save_contact_us", async function (req, res){
     var d = req.body;
     var sql = `INSERT INTO contact_us (name, email, phone, message) VALUE (?,?,?,?) `;
     var data = await exe(sql, [d.name, d.email, d.phone, d.message] );
@@ -267,7 +268,7 @@ router.post("/save_contact_us",verify_login, async function (req, res){
     res.redirect("contact_us");
 });
 
-router.get("/about_us", verify_login, async function (req, res){
+router.get("/about_us",  async function (req, res){
     var category = await exe('SELECT * FROM category',);
     var obj = {"category":category, "is_login":is_login(req)};
     res.render("user/about_us.ejs", obj);
