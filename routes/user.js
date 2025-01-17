@@ -12,6 +12,19 @@ function verify_login(req, res, next)
     res.send("<script> location.href = document.referrer+'?open_login_modal' </script> ");
 }
 
+function logout(req, res) {
+    req.session.destroy(function(err) {
+        if (err) {
+            return res.status(500).send('Failed to log out.');
+        }
+       res.send("<script> location.href = document.referrer+'' </script> ");
+    });
+}
+
+router.get("/logout", logout, function(req, res){
+   // res.send("<script> location.href = document.referrer+'?open_login_modal' </script> ");
+});
+
 function is_login(req)
 {
     if(req.session.user_id)
@@ -102,6 +115,8 @@ router.post("/proceed_login", async function(req, res){
 });
 
 
+
+
 router.get("/cart", verify_login, async function(req, res){
     var d = req.body;
     var sql = `SELECT * FROM cart, products, user_accounts
@@ -158,7 +173,7 @@ router.get("/checkout", verify_login, async function(req, res){
     res.render("user/checkout.ejs", obj);
 });
 
-router.post("/confirm_order", verify_login,async function(req, res){
+router.post("/confirm_order", async function(req, res){
     var user_id = req.session.user_id;
     var sql =`SELECT * FROM products, cart WHERE cart.product_id = products.product_id
                         AND user_id = '${user_id}'`;
