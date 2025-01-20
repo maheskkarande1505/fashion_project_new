@@ -2,16 +2,13 @@ var express = require("express");
 var router = express.Router();
 var exe = require("./../connection")
 
-function verify_login(req, res, next)
-{
-    req.session.user_id = 1;
-    if(req.session.user_id)
-        next();
-    else
-    res.send("<script> location.href = document.referrer+'?open_login_modal' </script> ");
-}
 
-router.get("/", async function(req, res){
+router.get("/", async function (req, res){
+
+    res.render("admin/admin_login.ejs")
+})
+
+router.get("/admin_page", async function(req, res){
     
     
     // Pending Order Count
@@ -339,10 +336,27 @@ router.get("/change_order_status_to_deliver/:order_id", async function(req, res)
     res.redirect("/admin/dispatch_orders");
 });
 
+router.post("/proceed_admin_login", async function(req,res){
 
-
-
-
+    var d = req.body;
+    var sql = `SELECT * FROM admin_accounts WHERE email = ? AND password = ?`;
+    var data = await exe(sql,[d.email, d.password]);
+    if(data.length > 0)
+    {
+        var admin_id = data[0].admin_id;
+        req.session.admin_id = admin_id;
+      // res.send("login Success");
+       res.send(`
+                    <script> 
+                         var url =  document.referrer;
+                         var new_url = url.replaceAll('admin', 'admin/admin_page');
+                         location.href = new_url;
+                    </script>
+                    `);
+    }
+    else
+    res.send("login Failed");
+})
 
 
 module.exports = router;    
