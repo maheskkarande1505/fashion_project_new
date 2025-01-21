@@ -17,7 +17,7 @@ function logout(req, res) {
         if (err) {
             return res.status(500).send('Failed to log out.');
         }
-       res.send("<script> location.href = document.referrer+'' </script> ");
+       res.send("<script> location.href = document.referrer+'' </script> "); 
     });
 }
 
