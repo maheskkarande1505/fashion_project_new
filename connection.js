@@ -2,10 +2,17 @@ var mysql = require("mysql");
 var util = require("util");
 
 var conn = mysql.createConnection({
-    "host":"localhost",
-    "user":"root",
-    "password":"",
-    "database":"fashion_project"
+   // "host":"localhost",
+   // "user":"root",
+   // "password":"",
+   // "database":"fashion_project"
+
+    //Server Side
+
+    "host":"b8n1rh8fy2ujm9fobkqs-mysql.services.clever-cloud.com",
+    "user":"us7k4g1tl71cmwlb",
+    "password":"yNySfdZedmNRpaNbXaX5",
+    "database":"b8n1rh8fy2ujm9fobkqs"
 });
 
 var exe = util.promisify(conn.query).bind(conn);
