@@ -403,7 +403,7 @@ router.post("/proceed_admin_login", async function(req,res){
                 <div class="container">
                     <h2>Login Failed</h2>
                     <p>Incorrect username or password. Please try again.</p>
-                    <a href="/login">Back to Login</a>
+                    <a href="/admin">Back to Login</a>
                 </div>
             </body>
             </html>
